@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SimpleChat</string>
+
+    <!-- Verification Page -->
+    <string name="text_verification_title">OTP Verification</string>
+    <string name="text_verification_content">We will send you a One Time Password on this mobile phone</string>
+    <string name="edit_text_hint">Input Your Phone Number</string>
+    <string name="button_continue">Continue</string>
+
+    <!-- OTP Verify Input Page -->
+    <string name="text_otp_title">Verify +86 13288945968</string>
+    <string name="text_otp_content">Enter OTP code to verify your phone number</string>
+    <string name="button_otp_continue">Continue</string>
+</resources>
