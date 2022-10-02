@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var verificationView: VerificationView
+    private lateinit var verificationView: VerificationPageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        verificationView = VerificationView(this)
+        verificationView = VerificationPageView(this)
         setContentView(verificationView)
     }
 }

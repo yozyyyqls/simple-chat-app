@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="toolbarColor" format="reference"/>
+    <attr name="cardColor" format="reference"/>
+    <attr name="buttonColor" format="reference"/>
+
+    <attr name="onTextColor" format="reference"/>
+    <attr name="textOnPrimaryColor" format="reference"/>
+
+    <attr name="cPrimary" format="reference"/>
+    <attr name="cOnPrimary" format="reference"/>
+
+    <attr name="cSecondary" format="reference"/>
+    <attr name="cOnSecondary" format="reference"/>
+</resources>

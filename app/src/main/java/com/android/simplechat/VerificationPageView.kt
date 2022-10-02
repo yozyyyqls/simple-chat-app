@@ -5,22 +5,25 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.text.InputType
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 
-class VerificationView constructor(
+class VerificationPageView constructor(
     context: Context
 ) : RelativeLayout(context) {
     private val toolbar: Toolbar
+    private val ivVerificationImage: ImageView
     private val tvVerificationTitle: TextView
     private val tvVerificationContent: TextView
     private val cvPhoneInputContainer: CardView
@@ -37,18 +40,34 @@ class VerificationView constructor(
                 addRule(ALIGN_PARENT_TOP)
             }
             id = generateViewId()
+            title = context.getString(R.string.app_name)
         }
         this.addView(toolbar)
+
+        // Image
+        ivVerificationImage = ImageView(context).apply {
+            setImageDrawable(context.getDrawable(R.drawable.pic_verification_view))
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+                addRule(BELOW, toolbar.id)
+                addRule(CENTER_HORIZONTAL)
+                topMargin = 230
+            }
+            id = generateViewId()
+        }
+        this.addView(ivVerificationImage)
 
         // Title
         tvVerificationTitle = TextView(context).apply {
             text = context.getString(R.string.text_verification_title)
             layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-                addRule(BELOW, toolbar.id)
-                topMargin = 260
+                addRule(BELOW, ivVerificationImage.id)
             }
             gravity = Gravity.CENTER
-            setTextColor(context.getColor(R.color.colorPrimary))
+
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(R.attr.textOnPrimaryColor, typedValue, true)
+            setTextColor(typedValue.data)
+
             textSize = 32.0f
             typeface = Typeface.DEFAULT_BOLD
             id = generateViewId()
@@ -92,9 +111,13 @@ class VerificationView constructor(
             typeface = Typeface.DEFAULT_BOLD
             val roundedShape = GradientDrawable().apply {
                 cornerRadius = 16f
-                setColor(context.getColor(R.color.colorPrimary))
+                setStroke(3, context.getColor(R.color.white))
+                val typedValue = TypedValue()
+                context.theme.resolveAttribute(R.attr.onTextColor, typedValue, true)
+                setTextColor(typedValue.data)
             }
             background = roundedShape
+
             setOnClickListener {
                 val intent = Intent(context, OTPActivity::class.java)
                 context.startActivity(intent)
@@ -115,9 +138,12 @@ class VerificationView constructor(
             layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
                 addRule(BELOW, tvVerificationContent.id)
                 addRule(RelativeLayout.CENTER_HORIZONTAL)
-                setMargins(56, 200, 56, 200)
+                setMargins(56, 16, 56, 16)
             }
-            setCardBackgroundColor(context.getColor(R.color.colorPrimaryContainer))
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(R.attr.cardColor, typedValue, true)
+            setCardBackgroundColor(typedValue.data)
+
             radius = 16f
             cardElevation = 16f
             id = generateViewId()

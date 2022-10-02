@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="SimpleChatText" parent="Theme.MaterialComponents.Light">
-        <item name="android:textColor">#37353A</item>
+    <style name="SimpleChatText">
+        <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="CardView" parent="Base.CardView">
+    <style name="CardView">
         <item name="android:radius">16dp</item>
     </style>
 </resources>
