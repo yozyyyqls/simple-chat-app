@@ -1,4 +1,4 @@
-package com.android.simplechat
+package com.android.simplechat.view
 
 import android.content.Context
 import android.content.Intent
@@ -18,6 +18,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
+import com.android.simplechat.R
+import com.android.simplechat.activity.OTPActivity
 
 class VerificationPageView constructor(
     context: Context
@@ -119,7 +121,9 @@ class VerificationPageView constructor(
             background = roundedShape
 
             setOnClickListener {
-                val intent = Intent(context, OTPActivity::class.java)
+                val intent = Intent(context, OTPActivity::class.java).apply {
+                    putExtra("PHONE_NUMBER", etInputPhone.text.toString())
+                }
                 context.startActivity(intent)
             }
         }

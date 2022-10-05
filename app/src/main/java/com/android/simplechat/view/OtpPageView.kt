@@ -1,4 +1,4 @@
-package com.android.simplechat
+package com.android.simplechat.view
 
 import android.content.Context
 import android.graphics.Typeface
@@ -15,26 +15,27 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.* // ktlint-disable no-wildcard-imports
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.android.simplechat.R
+import com.android.simplechat.activity.OTPActivity
 import com.mukesh.OTP_VIEW_TYPE_BORDER
 import com.mukesh.OtpView
 
 class OtpPageView constructor(
-    context: Context
+    context: Context,
+    phoneNumber: String
 ) : LinearLayout(context) {
     private val ivOtpImage: ImageView
     private val tvOtpTitle: TextView
     private val tvOtpContent: TextView
     private val llInputOtpContainer: LinearLayout
-    private val otpView: ComposeView
-    private val btContinue: Button
+    val otpView: ComposeView
+    val btContinue: Button
 
     init {
         this.orientation = VERTICAL
@@ -52,7 +53,7 @@ class OtpPageView constructor(
 
         // Title
         tvOtpTitle = TextView(context).apply {
-            text = context.getString(R.string.text_otp_title)
+            text = "Verify $phoneNumber"
             textSize = 32f
             typeface = Typeface.DEFAULT_BOLD
             gravity = Gravity.CENTER
@@ -85,9 +86,8 @@ class OtpPageView constructor(
         // OTP View
         val inflater = LayoutInflater.from(context)
         otpView = inflater.inflate(R.layout.otp_view, null) as ComposeView
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(R.attr.cOnPrimary, typedValue, true)
         otpView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MaterialTheme {
                     var otpValue by remember { mutableStateOf("") }
@@ -95,8 +95,10 @@ class OtpPageView constructor(
                         otpText = otpValue,
                         onOtpTextChange = {
                             otpValue = it
+                            (context as OTPActivity).otpValue = it
                             Log.d("Actual Value", otpValue)
                         },
+                        otpCount = 6,
                         type = OTP_VIEW_TYPE_BORDER,
                         password = false,
                         containerSize = 56.dp,

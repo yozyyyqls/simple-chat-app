@@ -1,7 +1,8 @@
-package com.android.simplechat
+package com.android.simplechat.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.android.simplechat.view.VerificationPageView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var verificationView: VerificationPageView
