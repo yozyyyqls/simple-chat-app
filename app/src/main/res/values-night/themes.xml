@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.SimpleChat" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorPrimaryText</item>
+        <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorSecondaryDark</item>

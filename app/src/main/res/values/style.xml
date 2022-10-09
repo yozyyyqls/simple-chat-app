@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="SimpleChatTitleText">
+        <item name="android:textColor">?attr/textOnPrimaryColor</item>
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="SimpleChatContentText">
+        <item name="android:textColor">?attr/textOnPrimaryColor</item>
+        <item name="android:textSize">@dimen/content_size</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
     <style name="SimpleChatText">
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textSize">16sp</item>

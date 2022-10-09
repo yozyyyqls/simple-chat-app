@@ -33,6 +33,7 @@
                 android:value="" />
         </activity>
         <activity android:name=".activity.SetupProfileActivity"/>
+        <activity android:name=".activity.FriendsActivity"/>
 
     </application>
 

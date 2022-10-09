@@ -11,4 +11,6 @@
     <string name="text_otp_title">Verify +86 13288945968</string>
     <string name="text_otp_content">Enter OTP code to verify your phone number</string>
     <string name="button_otp_continue">Continue</string>
+    <string name="text_profile_page_title">Profile Information</string>
+    <string name="text_profile_page_content">Please set your name and an optional profile image</string>
 </resources>
