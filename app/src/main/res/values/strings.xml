@@ -13,4 +13,8 @@
     <string name="button_otp_continue">Continue</string>
     <string name="text_profile_page_title">Profile Information</string>
     <string name="text_profile_page_content">Please set your name and an optional profile image</string>
+
+    <!-- Friends List Page -->
+    <string name="text_friends_title">Friends List</string>
+    <string name="text_friends_content">Start chatting with your friends!</string>
 </resources>

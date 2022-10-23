@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.android.simplechat.model.User
 import com.android.simplechat.view.SetupProfileView
@@ -28,10 +29,10 @@ class SetupProfileActivity : AppCompatActivity() {
         setContentView(setupProfileView)
 
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
+        database = FirebaseDatabase.getInstance("https://simplechat-a6891-default-rtdb.asia-southeast1.firebasedatabase.app")
         storage = FirebaseStorage.getInstance()
 
-        dialog!!.apply {
+        dialog = ProgressDialog(this@SetupProfileActivity).apply {
             setMessage("Updating Profile...")
             setCancelable(false)
         }
@@ -74,8 +75,8 @@ class SetupProfileActivity : AppCompatActivity() {
                                 .child(uid!!) // current path: /users/<uid>/
                                 .setValue(user)
                                 .addOnCompleteListener {
+                                    Log.d(TAG, "save user data in database successfully")
                                     dialog!!.dismiss()
-                                    // TODO: start activity of friend list.
                                     val intent = Intent(this@SetupProfileActivity, FriendsActivity::class.java)
                                     startActivity(intent)
                                     finish()
@@ -110,12 +111,16 @@ class SetupProfileActivity : AppCompatActivity() {
                         database!!.reference
                             .child("users")
                             .child(FirebaseAuth.getInstance().uid!!)
-                            .updateChildren(obj).addOnCompleteListener {  }
+                            .updateChildren(obj).addOnCompleteListener { }
                     }
                 }
             }
             setupProfileView.circleImageView.setImageURI(imageUrl)
             this.selectedImage = imageUrl
         }
+    }
+
+    companion object {
+        final val TAG = "SetupProfileActivity"
     }
 }
