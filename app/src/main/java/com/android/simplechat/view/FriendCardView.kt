@@ -7,6 +7,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.android.simplechat.R
 import de.hdodenhof.circleimageview.CircleImageView
 
 class FriendCardView constructor(
@@ -51,7 +52,7 @@ class FriendCardView constructor(
         this.addView(cvFriend)
 
         civUserProfile = CircleImageView(context).apply {
-            setImageDrawable(profile!!)
+            setImageDrawable(context.getDrawable(R.drawable.pic_profile))
         }
         this.addView(civUserProfile)
 
