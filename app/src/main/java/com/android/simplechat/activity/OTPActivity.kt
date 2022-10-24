@@ -12,12 +12,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 import java.util.concurrent.TimeUnit
 
 class OTPActivity : AppCompatActivity() {
     private lateinit var otpPageView: OtpPageView
     var verificationId: String? = null
     var auth: FirebaseAuth? = null
+    var database: FirebaseDatabase? = null
     var otpValue: String? = null
     private var dialog: ProgressDialog? = null
 
@@ -53,6 +55,7 @@ class OTPActivity : AppCompatActivity() {
         }
 
         auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance("https://simplechat-a6891-default-rtdb.asia-southeast1.firebasedatabase.app")
 
         val option = PhoneAuthOptions.newBuilder(auth!!)
             .setPhoneNumber(phoneNumber)
@@ -69,9 +72,20 @@ class OTPActivity : AppCompatActivity() {
             auth!!.signInWithCredential(credential)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        val intent = Intent(this@OTPActivity, SetupProfileActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        database!!.reference
+                            .child("users")
+                            .child(auth!!.uid.toString())
+                            .get().addOnCompleteListener {
+                                // If uid has existed in database, skip setup profile.
+                                val intent = Intent(this@OTPActivity, FriendsActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener {
+                                val intent = Intent(this@OTPActivity, SetupProfileActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
                     } else {
                         Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
                     }
