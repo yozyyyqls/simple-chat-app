@@ -57,7 +57,7 @@ class SetupProfileActivity : AppCompatActivity() {
                 val reference = storage!!.reference
                     .child("profile")
                     .child(auth!!.uid!!) // current path: /profile/<uid>/
-                // Put user's profile image to the cloud storage.
+
                 reference.putFile(selectedImage!!).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // After uploading a file, can get a Url to download the file.
@@ -121,6 +121,6 @@ class SetupProfileActivity : AppCompatActivity() {
     }
 
     companion object {
-        final val TAG = "SetupProfileActivity"
+        const val TAG = "SetupProfileActivity"
     }
 }
