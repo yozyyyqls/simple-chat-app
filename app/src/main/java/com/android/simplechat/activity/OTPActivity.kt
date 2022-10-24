@@ -50,7 +50,7 @@ class OTPActivity : AppCompatActivity() {
                 dialog!!.dismiss()
                 verificationId = verifyId
                 otpPageView.otpView.requestFocus()
-                Log.d(TAG, "onCodeSent:$verifyId")
+                Log.d(TAG, "onCodeSent: $verifyId")
             }
         }
 
@@ -70,21 +70,27 @@ class OTPActivity : AppCompatActivity() {
             Log.d(TAG, "otp value: $otpValue")
             val credential = PhoneAuthProvider.getCredential(verificationId!!, otpValue!!)
             auth!!.signInWithCredential(credential)
-                .addOnCompleteListener {
+                .addOnCompleteListener { it ->
                     if (it.isSuccessful) {
+                        Log.d(TAG, "Auth uid: ${auth!!.uid}")
                         database!!.reference
                             .child("users")
-                            .child(auth!!.uid.toString())
-                            .get().addOnCompleteListener {
-                                // If uid has existed in database, skip setup profile.
-                                val intent = Intent(this@OTPActivity, FriendsActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                            .child(auth!!.uid!!)
+                            .get().addOnCompleteListener { task ->
+                                Log.d(TAG, "User exists in database: ${task.result.value}")
+                                if (task.result.value != null) {
+                                    // If uid has existed in database, skip setup profile.
+                                    val intent = Intent(this@OTPActivity, FriendsActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                } else {
+                                    val intent = Intent(this@OTPActivity, SetupProfileActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
                             }
                             .addOnFailureListener {
-                                val intent = Intent(this@OTPActivity, SetupProfileActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                Toast.makeText(this@OTPActivity, "Fail to access to database", Toast.LENGTH_SHORT).show()
                             }
                     } else {
                         Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
