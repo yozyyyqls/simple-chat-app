@@ -19,21 +19,22 @@ class FriendCardView constructor(
     private var txName: TextView? = null
     private var txLatestMessage: TextView? = null
 
-    var profile: Drawable? = null
+    var profile: CircleImageView
+        get() = civUserProfile
         set(value) {
-            field = value
+            civUserProfile = value
         }
 
-    var name: String = ""
-        get() = field
+    var name: String
+        get() = txName?.text?.toString() ?: ""
         set(value) {
-            field = value
+            txName!!.text = value
         }
 
-    var latestMsg: String = ""
-        get() = field
+    var latestMsg: String
+        get() = txLatestMessage?.text?.toString() ?: ""
         set(value) {
-            field = value
+            txLatestMessage!!.text = value
         }
 
     init {
@@ -52,15 +53,23 @@ class FriendCardView constructor(
         this.addView(cvFriend)
 
         civUserProfile = CircleImageView(context).apply {
-            setImageDrawable(context.getDrawable(R.drawable.pic_profile))
+            layoutParams = LayoutParams(dp2px(40f), dp2px(40f)).apply {
+                leftMargin = 16
+                topMargin = 8
+                bottomMargin = 8
+            }
         }
-        this.addView(civUserProfile)
+        llContainer!!.addView(civUserProfile)
 
         txName = TextView(context).apply {
-            text = name
+            text = ""
+            textSize = 12f
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
         }
         txLatestMessage = TextView(context).apply {
-            text = latestMsg
+            text = "Latest Message"
+            textSize = 10f
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
         }
 
         llNameContainer = LinearLayout(context).apply {
