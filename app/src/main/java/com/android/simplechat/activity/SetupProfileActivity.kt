@@ -96,25 +96,27 @@ class SetupProfileActivity : AppCompatActivity() {
         if (data != null && data.data != null) {
             // File path
             val imageUrl = data.data
-            val storage = FirebaseStorage.getInstance()
-            val time = Date().time
-
-            val reference = storage.reference
-                .child("profile")
-                .child(time.toString() + "")
-            reference.putFile(imageUrl!!).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    reference.downloadUrl.addOnCompleteListener { uri ->
-                        val filePath = uri.toString()
-                        val obj = HashMap<String, Any>()
-                        obj["image"] = filePath
-                        database!!.reference
-                            .child("users")
-                            .child(FirebaseAuth.getInstance().uid!!)
-                            .updateChildren(obj).addOnCompleteListener { }
-                    }
-                }
-            }
+//            val storage = FirebaseStorage.getInstance()
+//            val time = Date().time
+//
+//            val reference = storage.reference
+//                .child("profile")
+//                .child(auth!!.uid!!)
+//                .child(time.toString() + "")
+//
+//            reference.putFile(imageUrl!!).addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    reference.downloadUrl.addOnCompleteListener { uri ->
+//                        val filePath = uri.toString()
+//                        val obj = HashMap<String, Any>()
+//                        obj["image"] = filePath
+//                        database!!.reference
+//                            .child("users")
+//                            .child(auth!!.uid!!)
+//                            .updateChildren(obj).addOnCompleteListener { }
+//                    }
+//                }
+//            }
             setupProfileView.circleImageView.setImageURI(imageUrl)
             this.selectedImage = imageUrl
         }
