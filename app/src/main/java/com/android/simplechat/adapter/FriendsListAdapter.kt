@@ -4,9 +4,12 @@ import android.content.Context
 import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.android.simplechat.R
 import com.android.simplechat.model.User
 import com.android.simplechat.view.FriendCardView
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class FriendsListAdapter constructor(
     var context: Context,
@@ -18,19 +21,24 @@ class FriendsListAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: FriendsListViewHolder, position: Int) {
-        if (userList == null) return
+        if (userList.size == 0) return
         val user = userList[position]
         val view = holder.itemView as FriendCardView
 
-        view.profile = Glide.with(context).load(user.profileImage).placeholderDrawable
+        val imageRef: StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(user.profileImage!!)
+
+        Glide.with(context)
+            .load(imageRef)
+            .placeholder(context.getDrawable(R.drawable.pic_profile))
+            .into(view.profile!!)
         view.name = user.name!!
 
-        Log.d(TAG, "User Name: ${user.name}, User Uid: ${user.uid}, Phone: ${user.phoneNumber}")
+        Log.d(TAG, "User Name: ${user.name}, User Uid: ${user.uid}, Phone: ${user.phoneNumber}, Profile URL: ${user.profileImage}")
     }
 
     override fun getItemCount(): Int = userList.size
 
     companion object {
-        final const val TAG = "FriendsListAdapter"
+        const val TAG = "FriendsListAdapter"
     }
 }

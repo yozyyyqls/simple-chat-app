@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
-import kotlin.collections.HashMap
 
 class SetupProfileActivity : AppCompatActivity() {
     private lateinit var setupProfileView: SetupProfileView
@@ -56,14 +55,15 @@ class SetupProfileActivity : AppCompatActivity() {
             if (selectedImage != null) {
                 val reference = storage!!.reference
                     .child("profile")
-                    .child(auth!!.uid!!) // current path: /profile/<uid>/
+                    .child(auth!!.uid!!)
+                    .child(Date().time.toString()) // current path: /profile/<uid>/<time>.jpg
 
                 reference.putFile(selectedImage!!).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // After uploading a file, can get a Url to download the file.
-                        reference.downloadUrl.addOnCompleteListener { uri ->
+                        // After uploading a file, we can get a Url to download the file.
+                        reference.downloadUrl.addOnCompleteListener {
                             // Image Url in cloud storage.
-                            val imageUrl = uri.toString()
+                            val imageUrl = reference.toString()
                             val uid = auth!!.uid
                             val name: String = setupProfileView.etNameInput.text.toString()
                             val phone = auth!!.currentUser!!.phoneNumber
