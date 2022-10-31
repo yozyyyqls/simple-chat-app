@@ -1,6 +1,7 @@
 package com.android.simplechat.view
 
 import android.content.Context
+import android.view.Gravity
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
@@ -26,7 +27,9 @@ class FriendsView constructor(
         tvFriendsTitle = TextView(context).apply {
             text = context.getString(R.string.text_friends_title)
             setTextAppearance(R.style.SimpleChatTitleText)
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+                gravity = Gravity.CENTER
+            }
         }
         this.addView(tvFriendsTitle)
 
@@ -34,7 +37,9 @@ class FriendsView constructor(
         tvFriendsContent = TextView(context).apply {
             text = context.getString(R.string.text_friends_content)
             setTextAppearance(R.style.SimpleChatContentText)
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+                gravity = Gravity.CENTER
+            }
         }
         this.addView(tvFriendsContent)
 
@@ -42,13 +47,14 @@ class FriendsView constructor(
         rvFriendsList = FriendsListView(context, adapter).apply {
             layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
         }
+        this.addView(rvFriendsList)
 
         // Friends List Linearlayout Container
-        llFriendsContainer = LinearLayout(context).apply {
-            orientation = VERTICAL
-            layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
-            addView(rvFriendsList)
-        }
-        this.addView(llFriendsContainer)
+//        llFriendsContainer = LinearLayout(context).apply {
+//            orientation = VERTICAL
+//            layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
+//            addView(rvFriendsList)
+//        }
+//        this.addView(llFriendsContainer)
     }
 }
