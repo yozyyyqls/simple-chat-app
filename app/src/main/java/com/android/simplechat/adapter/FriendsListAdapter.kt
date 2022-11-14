@@ -1,10 +1,12 @@
 package com.android.simplechat.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.simplechat.R
+import com.android.simplechat.activity.ChatActivity
 import com.android.simplechat.model.User
 import com.android.simplechat.view.friend.FriendCardView
 import com.bumptech.glide.Glide
@@ -16,7 +18,7 @@ class FriendsListAdapter constructor(
     var userList: ArrayList<User>
 ) : RecyclerView.Adapter<FriendsListViewHolder?>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsListViewHolder {
-        var v = FriendCardView(context)
+        val v = FriendCardView(context)
         return FriendsListViewHolder(v)
     }
 
@@ -32,6 +34,12 @@ class FriendsListAdapter constructor(
             .placeholder(context.getDrawable(R.drawable.pic_profile))
             .into(view.profile!!)
         view.name = user.name!!
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ChatActivity::class.java)
+            intent.putExtra("USER", user)
+            context.startActivity(intent)
+        }
 
         Log.d(TAG, "User Name: ${user.name}, User Uid: ${user.uid}, Phone: ${user.phoneNumber}, Profile URL: ${user.profileImage}")
     }
