@@ -1,13 +1,13 @@
 package com.android.simplechat.view.friend
 
 import android.content.Context
-import android.graphics.drawable.Drawable
+import android.view.Gravity
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import com.android.simplechat.R
+import com.android.simplechat.utils.dp2px
 import de.hdodenhof.circleimageview.CircleImageView
 
 class FriendCardView constructor(
@@ -15,11 +15,12 @@ class FriendCardView constructor(
 ) : LinearLayout(context) {
     private var cvFriend: CardView? = null
     private var civUserProfile: CircleImageView? = null
+    private var llContainer: LinearLayout? = null
     private var llNameContainer: LinearLayout? = null
     private var txName: TextView? = null
     private var txLatestMessage: TextView? = null
 
-    var profile: CircleImageView
+    var profile: CircleImageView?
         get() = civUserProfile
         set(value) {
             civUserProfile = value
@@ -42,7 +43,7 @@ class FriendCardView constructor(
         this.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
         cvFriend = CardView(context).apply {
-            layoutParams = LayoutParams(MATCH_PARENT, 56).apply {
+            layoutParams = LayoutParams(MATCH_PARENT, dp2px(56f)).apply {
                 leftMargin = 16
                 rightMargin = 16
                 topMargin = 4
@@ -52,11 +53,18 @@ class FriendCardView constructor(
         }
         this.addView(cvFriend)
 
+        llContainer = LinearLayout(context).apply {
+            orientation = HORIZONTAL
+            layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
+        }
+        cvFriend!!.addView(llContainer)
+
         civUserProfile = CircleImageView(context).apply {
             layoutParams = LayoutParams(dp2px(40f), dp2px(40f)).apply {
                 leftMargin = 16
                 topMargin = 8
                 bottomMargin = 8
+                gravity = Gravity.CENTER_VERTICAL
             }
         }
         llContainer!!.addView(civUserProfile)
@@ -74,10 +82,12 @@ class FriendCardView constructor(
 
         llNameContainer = LinearLayout(context).apply {
             orientation = VERTICAL
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
+                gravity = Gravity.CENTER_VERTICAL
+            }
             addView(txName)
             addView(txLatestMessage)
         }
-        this.addView(llNameContainer)
+        llContainer!!.addView(llNameContainer)
     }
 }
