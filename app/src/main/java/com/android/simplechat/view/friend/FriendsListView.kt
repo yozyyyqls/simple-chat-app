@@ -1,4 +1,4 @@
-package com.android.simplechat.view
+package com.android.simplechat.view.friend
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager

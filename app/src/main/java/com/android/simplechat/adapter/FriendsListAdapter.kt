@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.simplechat.R
 import com.android.simplechat.model.User
-import com.android.simplechat.view.FriendCardView
+import com.android.simplechat.view.friend.FriendCardView
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference

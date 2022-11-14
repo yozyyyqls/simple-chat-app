@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.android.simplechat.adapter.FriendsListAdapter
 import com.android.simplechat.model.User
-import com.android.simplechat.view.FriendsView
+import com.android.simplechat.view.friend.FriendsView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
