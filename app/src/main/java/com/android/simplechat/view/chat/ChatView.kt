@@ -66,7 +66,10 @@ class ChatView constructor(
 
         // Body
         rvMessageFlow = MessageFlowView(context, adapter).apply {
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT).apply {
+                addRule(BELOW, toolbar!!.id)
+            }
+            id = generateViewId()
         }
         this.addView(rvMessageFlow)
 
